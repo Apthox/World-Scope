@@ -17,6 +17,15 @@ var accountRouter = require('./routes/account');
 var gameRouter = require('./routes/game');
 var leaderboardRouter = require('./routes/leaderboard');
 
+var dbconnection = require('./models/dbconnection');
+
+dbconnection.get_dbo_instance().then( async (dbo) => {
+    results = await dbo.collection('user').find({}).toArray();
+
+    console.log(results[0].username)
+
+    //console.log(dbo.collection('user').find({}).toArray().then(users => console.log(users)));
+});
 
 
 // var uri = "mongodb://sampop:Project2@cluster0-shard-00-00-hnxfk.mongodb.net:27017,cluster0-shard-00-01-hnxfk.mongodb.net:27017,cluster0-shard-00-02-hnxfk.mongodb.net:27017/project3?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority";

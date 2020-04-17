@@ -14,22 +14,25 @@ router.get('/login', function(req, res, next) {
 });
 
 router.post('/login',function(req,res,next) {
-    db.User.findOne({username: req.body.username}).then(function(user) {
-        if(!user) {
-            res.redirect('/login',{message: "Error Loggin in"})
-        }
-        else {
-            bcrypt.compare(req.body.password,user.password,function(err,result) {
-                if(result) {
-                    res.redirect('/success');
-                }
-                else {
-                    res.redirect('/login',{message: "incorrect password"});
-                }
-            })
-        }
+    db.get_dbo_instance().then(async (dbo) => {
+        dbo.User.findOne({username: req.body.username}).then(function(user) {
+            if(!user) {
+                res.redirect('/login',{message: "Error Loggin in"})
+            }
+            else {
+                bcrypt.compare(req.body.password,user.password,function(err,result) {
+                    if(result) {
+                        res.redirect('/success');
+                    }
+                    else {
+                        res.redirect('/login',{message: "incorrect password"});
+                    }
+                })
+            }
+        })
     })
-})
+});
+
 
 router.get('/logout', function(req, res, next) {
     res.render('logout', { title: 'Express' });
@@ -37,13 +40,15 @@ router.get('/logout', function(req, res, next) {
 
 router.post('/signup',function(req, res, next) {
     bcrypt.hash(req.body.password,10,function(err,hash) {
-        db.User.create({
-            username: req.body.username,
-            password:hash
-        }).then((data) => {
-            if(data) {
-                res.redirect('/')
-            }
+        db.get_dbo_instance().then(async (dbo) => {
+            dbo.User.create({
+                username: req.body.username,
+                password:hash
+            }).then((data) => {
+                if(data) {
+                    res.redirect('/')
+                }
+            })
         })
     })
 })
