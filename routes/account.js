@@ -14,23 +14,13 @@ router.get('/login', function(req, res, next) {
 });
 
 router.post('/login',function(req,res,next) {
-    db.get_dbo_instance().then(async (dbo) => {
-        dbo.User.findOne({username: req.body.username}).then(function(user) {
-            if(!user) {
-                res.redirect('/login',{message: "Error Loggin in"})
-            }
-            else {
-                bcrypt.compare(req.body.password,user.password,function(err,result) {
-                    if(result) {
-                        res.redirect('/success');
-                    }
-                    else {
-                        res.redirect('/login',{message: "incorrect password"});
-                    }
-                })
-            }
-        })
-    })
+    var userdata = User.authenticate_user(req.body.username,req.body.password);
+    if(userdata) {
+        res.redirect('/')
+    }
+    else {
+        res.redirect('/login')
+    }
 });
 
 

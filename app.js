@@ -30,10 +30,10 @@ dbconnection.get_dbo_instance().then( async (dbo) => {
 
 // var uri = "mongodb://sampop:Project2@cluster0-shard-00-00-hnxfk.mongodb.net:27017,cluster0-shard-00-01-hnxfk.mongodb.net:27017,cluster0-shard-00-02-hnxfk.mongodb.net:27017/project3?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority";
 // let dbconnection;
-// mongoClient.connect(uri,(err,db) => {
+// mongoose.connect(uri,(err,db) => {
 //     if(err) {
 //         console.log(err);
-//         return err;
+
 //     }
 //     var dbo = db.db('project3')
 //     dbo.listCollections().toArray().then(arr => {console.log(arr)})

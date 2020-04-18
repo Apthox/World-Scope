@@ -12,11 +12,17 @@
     "express": "~4.16.1",
     "hbs": "^4.1.1",
     "http-errors": "~1.6.3",
+<<<<<<< HEAD
     "mongodb": "^3.5.6",
     "mongoose": "^5.9.9",
     "morgan": "~1.9.1",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^6.0.1"
+=======
+    "morgan": "~1.9.1",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0"
+>>>>>>> 0cfbd08e590e3544224c1caa63ec45cfbdbc0737
   }
 }
