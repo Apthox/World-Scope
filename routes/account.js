@@ -8,7 +8,7 @@ var User = require('../models/user');
 
 
 router.get('/login', function(req, res, next) {
-    res.render('login', { title: 'Express' });
+    res.render('login', { title: 'Log in Page' });
 });
 
 router.post('/login',function(req,res,next) {
@@ -44,3 +44,6 @@ router.post('/signup',function(req, res, next) {
 
 
 module.exports = router;
+
+
+// work On making the map and game routes
