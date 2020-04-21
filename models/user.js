@@ -1,5 +1,4 @@
-const mongoose = require('mongoose');
-var passportLocalMongoose = require("passport-local-mongoose");
+
 var dbconnection = require('./dbconnection');
 var bcrypt = require('bcrypt');
 
@@ -8,7 +7,7 @@ module.exports.authenticate_user = async function (username, password) {
     // check database if someone with username exists
     let dbo = await dbconnection.get_dbo_instance();
     // if exits get passwor
-    let users = await dbo.collection('user').find({username:username}).toArray();
+    let users = await dbo.collection('users').find({username:username}).toArray();
     if(users.length < 1) {
         return false;
     }
@@ -31,46 +30,33 @@ module.exports.authenticate_user = async function (username, password) {
     return success;
 };
 
-module.exports.createUser = async function(username,password) {
+module.exports.createUser = async function(username, password, salt) {
+    console.log("Create User Function == 1");
+
     let dbo = await dbconnection.get_dbo_instance();
-    bcrypt.hash(password,10,function(err,hash) {
-        
-        dbo.User.create({
-            username: req.body.username,
-            password:hash
-        }).then((data) => {
-            if(data) {
-                return true;
+
+    let hash = await new Promise((resolve, reject) => {
+        bcrypt.genSalt(12).then(salt => {
+            bcrypt.hash(password, salt, function(err, hash) {
+            if (err) {
+                reject(err);
             }
-        }).catch((err) => {
-            return err;
-        })
-        
-    })
+            resolve(hash);
+        })});
+    });
+
+    console.log("Stored Hash > " + hash);
+
+    dbo.collection('users').insertOne({
+        username:username,
+        password:hash
+    });
+
+    return true;
+
 }
 
-var userSchema = new mongoose.Schema({
-    username:String,
-    password:String,
-    name:String,
-    age:Number,
-
-    places_been_to:[ 
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Map'
-        }
-        
-    ],
-    score:[ 
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Game'
-        }
-        
-    ]
-
-})
-userSchema.plugin(passportLocalMongoose);
-
-module.exports = mongoose.model("User", userSchema);
+module.exports.get_users = async function() {
+    let dbo = await dbconnection.get_dbo_instance();
+    dbo.collection('users').find();
+}

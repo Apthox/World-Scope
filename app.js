@@ -22,7 +22,7 @@ var dbconnection = require('./models/dbconnection');
 dbconnection.get_dbo_instance().then( async (dbo) => {
     results = await dbo.collection('user').find({}).toArray();
 
-    console.log(results[0].username)
+    console.log(results)
 
     //console.log(dbo.collection('user').find({}).toArray().then(users => console.log(users)));
 });

@@ -1,6 +1,6 @@
 var mongoClient = require('mongodb').MongoClient;
 
-var uri = "mongodb://sampop:Project2@cluster0-shard-00-00-hnxfk.mongodb.net:27017,cluster0-shard-00-01-hnxfk.mongodb.net:27017,cluster0-shard-00-02-hnxfk.mongodb.net:27017/project3?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority";
+var uri = "mongodb+srv://sampop:Project2@cluster0-hnxfk.mongodb.net/world-scope?retryWrites=true&w=majority";
 
 
 // create instance variable
@@ -11,10 +11,13 @@ module.exports.get_dbo_instance = async function() {
         let dbo = await new Promise( (resolve, reject) => {
             mongoClient.connect(uri,{useNewUrlParser: true, useUnifiedTopology: true },(err,db) => {
                 if(err) {
+                    console.log("Could not establish connection with server!");
                     console.log(err);
                     reject(err);
                 }
-                var dbo = db.db('project3')
+                var dbo = db.db('world-scope');
+                dbo.listCollections().toArray().then(arr => {console.log(arr)})
+                console.log(dbo);
                 resolve(dbo);
             })
         });
