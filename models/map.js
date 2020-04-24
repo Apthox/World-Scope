@@ -4,8 +4,13 @@ var mongo = require('mongodb');
 var dbconnection = require('./dbconnection');
 
 module.exports.get_maps_by_coordinates = async (latitude,longitude) => {
-    var db = await dbconnection.get_dbo_instance();
-
+    return new Promise(async (resolve,reject) => {
+        var db = await dbconnection.get_dbo_instance();
+        db.collection('map').find({latitude,longitude}).then(data => {
+            resolve(data);
+        });
+    })
+    
     
 }
 
@@ -21,7 +26,6 @@ module.exports.get_random_maps(id) = () => {
 
 module.exports.create_map = async (user_id,points,start,finish) => {
 
-
     var db = await dbconnection.get_dbo_instance();
 
     db.collection('map').insertOne({
@@ -32,13 +36,13 @@ module.exports.create_map = async (user_id,points,start,finish) => {
     })
 }
 
-module.exports.update_map = async (map_id) => {
+module.exports.update_map_hint = async (hint) => {
     var user_id = mongo.ObjectID(user_id);
 
     var db = await dbconnection.get_dbo_instance();
 
-    var endTime = { $set: {end: Math.round(new Date().getTime() / 1000)} };
-    db.collection('game').updateOne({_id: game_id},endTime)
+    var mapupdate = { $set: {hint: hint} };
+    db.collection('map').updateOne({hint: hunt},mapupdate)
 }
 
 
