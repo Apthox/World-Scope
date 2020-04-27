@@ -6,6 +6,9 @@ var logger = require('morgan');
 var passport = require("passport");
 var bodyParser = require('body-parser');
 var localStrategy = require('passport-local');
+const mongoose = require('mongoose');
+var bcrypt = require('bcrypt');
+
 
 
 var indexRouter = require('./routes/index');
@@ -14,6 +17,29 @@ var accountRouter = require('./routes/account');
 var gameRouter = require('./routes/game');
 var leaderboardRouter = require('./routes/leaderboard');
 
+var dbconnection = require('./models/dbconnection');
+
+dbconnection.get_dbo_instance().then( async (dbo) => {
+    results = await dbo.collection('user').find({}).toArray();
+
+    console.log(results)
+
+    //console.log(dbo.collection('user').find({}).toArray().then(users => console.log(users)));
+});
+
+
+// var uri = "mongodb://sampop:Project2@cluster0-shard-00-00-hnxfk.mongodb.net:27017,cluster0-shard-00-01-hnxfk.mongodb.net:27017,cluster0-shard-00-02-hnxfk.mongodb.net:27017/project3?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority";
+// let dbconnection;
+// mongoose.connect(uri,(err,db) => {
+//     if(err) {
+//         console.log(err);
+
+//     }
+//     var dbo = db.db('project3')
+//     dbo.listCollections().toArray().then(arr => {console.log(arr)})
+//     dbconnection = dbo;
+// })
+// mongoose.connect(uri,{useNewUrlParser: true, useUnifiedTopology: true });
 
 
 var app = express();
