@@ -17,7 +17,7 @@ module.exports.get_dbo_instance = async function() {
                 }
                 var dbo = db.db('world-scope');
                 dbo.listCollections().toArray().then(arr => {console.log(arr)})
-                console.log(dbo);
+                // console.log(dbo);
                 resolve(dbo);
             })
         });

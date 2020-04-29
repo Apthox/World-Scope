@@ -12,20 +12,20 @@ var bcrypt = require('bcrypt');
 
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var userRouter = require('./routes/user');
 var accountRouter = require('./routes/account');
 var gameRouter = require('./routes/game');
 var leaderboardRouter = require('./routes/leaderboard');
 
 var dbconnection = require('./models/dbconnection');
 
-dbconnection.get_dbo_instance().then( async (dbo) => {
-    results = await dbo.collection('user').find({}).toArray();
+// dbconnection.get_dbo_instance().then( async (dbo) => {
+//     results = await dbo.collection('user').find({}).toArray();
 
-    console.log(results)
+//     console.log(results)
 
-    //console.log(dbo.collection('user').find({}).toArray().then(users => console.log(users)));
-});
+//     //console.log(dbo.collection('user').find({}).toArray().then(users => console.log(users)));
+// });
 
 
 // var uri = "mongodb://sampop:Project2@cluster0-shard-00-00-hnxfk.mongodb.net:27017,cluster0-shard-00-01-hnxfk.mongodb.net:27017,cluster0-shard-00-02-hnxfk.mongodb.net:27017/project3?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority";
@@ -55,7 +55,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-// app.use('/users', usersRouter);
+app.use('/user', userRouter);
 app.use('/account', accountRouter);
 app.use('/game', gameRouter);
 app.use('/leaderboard', leaderboardRouter);
