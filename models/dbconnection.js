@@ -8,15 +8,15 @@ module.exports.dbo_instance = undefined;
 
 module.exports.get_dbo_instance = async function() {
     if (module.exports.dbo_instance == undefined) {
-        let dbo = await new Promise( (resolve, reject) => {
-            mongoClient.connect(uri,{useNewUrlParser: true, useUnifiedTopology: true },(err,db) => {
-                if(err) {
+        let dbo = await new Promise((resolve, reject) => {
+            mongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, (err, db) => {
+                if (err) {
                     console.log("Could not establish connection with server!");
                     console.log(err);
                     reject(err);
                 }
                 var dbo = db.db('world-scope');
-                dbo.listCollections().toArray().then(arr => {console.log(arr)})
+                //dbo.listCollections().toArray().then(arr => {console.log(arr)})
                 //console.log(dbo);
                 resolve(dbo);
             })
