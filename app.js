@@ -12,7 +12,7 @@ var bcrypt = require('bcrypt');
 
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var userRouter = require('./routes/user');
 var accountRouter = require('./routes/account');
 var gameRouter = require('./routes/game');
 var leaderboardRouter = require('./routes/leaderboard');
@@ -30,7 +30,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-// app.use('/users', usersRouter);
+app.use('/user', userRouter);
 app.use('/account', accountRouter);
 app.use('/game', gameRouter);
 app.use('/leaderboard', leaderboardRouter);
