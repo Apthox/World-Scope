@@ -61,21 +61,11 @@ module.exports.get_users = async function() {
     dbo.collection('users').find();
 }
 
+module.exports.remove_user = async function(username) {
+    console.log("Remove User")
+    let dbo = await dbconnection.get_dbo_instance();
+    dbo.collection('users').deleteOne(username);
+}
 
 
-/*
-Please use Zoom to record a video of your project 03.
-Each team member must talk about what they have contributed and show off their code.
-Do this by sharing your screen and walking through the work you have done.
-Answer the following:
-What have you done?
-What will you do?
-What roadblocks are there?
-This assignment serves the following purpose
-Ensures everyone is working
-Gets us used to using Zoom to record our project
-Secretly there will be a very similar assignment for your FINAL Submission
-Lets me see how the application is SUPPOSED to work
 
-
-*/
