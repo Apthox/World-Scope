@@ -1,8 +1,81 @@
+let initialize;
+
 $(document).ready(function() {
     console.log("Hello World!");
 
     let timer = undefined;
     let coords = undefined;
+    let locations = undefined;
+
+    let google_server_ready = false;
+    let location_recieved_bool = false;
+
+    function google_maps_ready() {
+
+        alert("Google Maps Ready!");
+
+        google_server_ready = true;
+
+        if (location_recieved_bool) {
+            init_google_map(coords[0], coords[1]);
+        }
+    }
+
+    initialize = google_maps_ready;
+
+
+    function location_recieved() {
+        location_recieved_bool = true;
+
+        if (google_maps_ready) {
+            init_google_map(coords[0], coords[1]);
+        }
+    }
+
+
+    function init_google_map(latitude, longitude) {
+        var panorama;
+
+        var location = {
+            lat: latitude,
+            lng: longitude
+        };
+
+        var panorama = new google.maps.StreetViewPanorama(
+            document.getElementById('street'), {
+                position: location,
+                pov: {
+                    heading: 34,
+                    pitch: 10
+                },
+                disableDefaultUI: true
+            });
+        map.setStreetView(panorama);
+
+    }
+
+    function get_question() {
+        $.ajax({
+            'url': './getQuestion',
+            'type': 'GET',
+            'success': question_received,
+            'error': function(request, error) {
+                alert("Request Failed: " + JSON.stringify(request));
+            }
+        });
+    }
+
+    function question_received(data) {
+        coords = data["coords"];
+        alert(coords);
+        // {latitude: 12.1231, longitude: 12.13123}
+        locations = data["locations"];
+        alert(locations);
+        // ["Figi", "Japan", ...]
+        location_recieved();
+        buttonRename(data);
+        assignEvents();
+    }
 
     // time : seconds allowed to play in round
     function init_timer(time) {
@@ -31,26 +104,6 @@ $(document).ready(function() {
         console.log("Timer Over!!");
     }
 
-    function get_question() {
-        let data = {
-            "coords": {
-                "latitude": 129,
-                "longitude": -30
-            },
-            "locations": [
-                "France",
-                "Germany",
-                "United States",
-                "United Kingdom"
-            ],
-            "Hint": "Known as the city of love"
-        }
-
-        coords = data["coords"];
-
-        return data;
-    }
-
     function send_answer(respInput) {
         // send 
         //set resp to respInput
@@ -66,8 +119,7 @@ $(document).ready(function() {
         };
     }
 
-    function buttonRename() {
-        let data = get_question();
+    function buttonRename(data) {
         let buttons = $(".ans-btn").toArray();
         for (let i = 0; i < 4; i++) {
             $(buttons[i]).text(data["locations"][i]);
@@ -107,8 +159,7 @@ $(document).ready(function() {
         console.log("Init Called!");
         init_timer(60);
         $("#points-val").text("0");
-        buttonRename();
-        assignEvents();
+        get_question();
     }
 
     init();
