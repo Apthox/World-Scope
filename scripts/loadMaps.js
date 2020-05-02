@@ -1,6 +1,6 @@
 const mapFolder = './maps/';
 const fs = require('fs');
-const 
+const mapModel = require('./../models/map');
 
 function writeMapToDatabase(file) {
 
@@ -8,6 +8,7 @@ function writeMapToDatabase(file) {
     let map = JSON.parse(rawdata);
     
     console.log(map);
+    mapModel.create_map(map);
 }
 
 fs.readdir(mapFolder, (err, files) => {
@@ -25,4 +26,6 @@ fs.readdir(mapFolder, (err, files) => {
         }
         
     });
+
+    return;
 });
