@@ -64,7 +64,8 @@ module.exports.get_users = async function() {
 module.exports.remove_user = async function(username) {
     console.log("Remove User")
     let dbo = await dbconnection.get_dbo_instance();
-    dbo.collection('users').deleteOne(username);
+    const query = {"username": username}
+    dbo.collection('users').deleteOne(query);
 }
 
 

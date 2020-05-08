@@ -16,7 +16,7 @@ module.exports.get_maps_by_coordinates = async (latitude,longitude) => {
     
 }
 
-module.exports.get_random_maps(id) = () => {
+module.exports.get_random_maps = async(id) => {
     return new Promise(async (resolve, reject) => {
         var db = await dbconnection.get_dbo_instance();
 
@@ -26,16 +26,23 @@ module.exports.get_random_maps(id) = () => {
     });
 }
 
-module.exports.create_map = async (user_id,points,start,finish) => {
+module.exports.create_map = async (title,hint,latitude,longitude) => {
 
     var db = await dbconnection.get_dbo_instance();
 
-    db.collection('map').insertOne({
-        user_id: mongo.ObjectID(user_id),
-        points:points,
-        start: Math.round(new Date().getTime() / 1000),
-        end: -1
-    })
+    if(!db.collection('map').findOne(title) > 0) { 
+        db.collection('map').insertOne({
+            title: title,
+            hint:hint,
+            latitude: latitude,
+            longitude: longitude
+        })
+        return true;
+    }
+    return false;
+
+    
+
 }
 
 module.exports.update_map_hint = async (hint) => {

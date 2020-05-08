@@ -3,15 +3,18 @@ var mongo = require('mongodb');
 var dbconnection = require('./dbconnection');
 
 
-module.exports.get_game_Id(id) = async (id) => {
-    var db = await dbconnection.get_dbo_instance();
+module.exports.get_game_Id = async (id) => {
 
-    db.collection('game').findById({_id: id}).then(game => {
-        return game;
-    });
+    return new Promise(async (resolve, reject) => {
+        var db = await dbconnection.get_dbo_instance();
+
+        db.collection('game').findById({_id: id}).then(game => {
+            resolve(game);
+        });
+    })   
 }
 
-module.exports.get_games(id) = async () => {
+module.exports.get_games = async (id) => {
     return new Promise(async (resiolve,reject) => {
         var db = await dbconnection.get_dbo_instance();
 
