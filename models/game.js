@@ -24,7 +24,7 @@ module.exports.get_games = async (id) => {
     })
 }
 
-module.exports.create_game = async (user_id,points,start,finish) => {
+module.exports.create_game = async (user_id,points) => {
 
 
     var db = await dbconnection.get_dbo_instance();
