@@ -1,4 +1,4 @@
-let initialize;
+//let initialize;
 
 $(document).ready(function() {
     console.log("Hello World!");
@@ -6,76 +6,6 @@ $(document).ready(function() {
     let timer = undefined;
     let coords = undefined;
     let locations = undefined;
-
-    let google_server_ready = false;
-    let location_recieved_bool = false;
-
-    function google_maps_ready() {
-
-        alert("Google Maps Ready!");
-
-        google_server_ready = true;
-
-        if (location_recieved_bool) {
-            init_google_map(coords[0], coords[1]);
-        }
-    }
-
-    initialize = google_maps_ready;
-
-
-    function location_recieved() {
-        location_recieved_bool = true;
-
-        if (google_maps_ready) {
-            init_google_map(coords[0], coords[1]);
-        }
-    }
-
-
-    function init_google_map(latitude, longitude) {
-        var panorama;
-
-        var location = {
-            lat: latitude,
-            lng: longitude
-        };
-
-        var panorama = new google.maps.StreetViewPanorama(
-            document.getElementById('street'), {
-                position: location,
-                pov: {
-                    heading: 34,
-                    pitch: 10
-                },
-                disableDefaultUI: true
-            });
-        map.setStreetView(panorama);
-
-    }
-
-    function get_question() {
-        $.ajax({
-            'url': './getQuestion',
-            'type': 'GET',
-            'success': question_received,
-            'error': function(request, error) {
-                alert("Request Failed: " + JSON.stringify(request));
-            }
-        });
-    }
-
-    function question_received(data) {
-        coords = data["coords"];
-        alert(coords);
-        // {latitude: 12.1231, longitude: 12.13123}
-        locations = data["locations"];
-        alert(locations);
-        // ["Figi", "Japan", ...]
-        location_recieved();
-        buttonRename(data);
-        assignEvents();
-    }
 
     // time : seconds allowed to play in round
     function init_timer(time) {
@@ -108,23 +38,33 @@ $(document).ready(function() {
         // send 
         //set resp to respInput
         let resp = {
-            "location": respInput,
-            "coords": coords
+            "location": params["stage"]["location"],
+            "answer": respInput
         }
 
-        // TODO: Get actual response 
-        return {
-            "wasCorrect": resp["location"] == "France",
-            "answer": "France"
-        };
+        console.log(resp);
+
+        $.ajax({
+            type: "POST",
+            url: './game',
+            data: resp,
+            success: function(data) {
+                console.log(data);
+                if (data["correct"]) {
+                    location.reload();
+                } else {
+                    window.location.replace("./leaderboard");
+                }
+            }
+        });
     }
 
     function buttonRename(data) {
         let buttons = $(".ans-btn").toArray();
         for (let i = 0; i < 4; i++) {
-            $(buttons[i]).text(data["locations"][i]);
+            $(buttons[i]).text(data[i]);
         }
-        $("#modalBody").text(data["Hint"]);
+        $("#modalBody").text(params["stage"]["hint"]);
     }
 
     function assignEvents() {
@@ -135,14 +75,9 @@ $(document).ready(function() {
     }
 
     function answer(e) {
-        console.log(e);
-        let target = e.currentTarget;
-        console.log("Answered > " + $(target).text());
-        if (send_answer($(target).text(), coords)["wasCorrect"]) {
-            success()
-        } else {
-            failed()
-        }
+        let target = $(this).text();
+        console.log("Answered > " + target);
+        send_answer(target);
     }
 
     function success() {
@@ -158,8 +93,9 @@ $(document).ready(function() {
     function init() {
         console.log("Init Called!");
         init_timer(60);
-        $("#points-val").text("0");
-        get_question();
+        $("#points-val").text(params["points"]);
+        buttonRename(params["stage"]["answers"]);
+        assignEvents();
     }
 
     init();

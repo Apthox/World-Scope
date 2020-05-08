@@ -40,6 +40,8 @@ router.get('/', gameController.is_in_game, async function(req, res) {
         req.session.new_stage = false;
     }
 
+    req.session.params["stage"]["location"] = [-33.8605405, 151.2095494];
+
     res.render('game', {
         title: 'Express',
         layout: "",
@@ -53,10 +55,30 @@ router.get('/', gameController.is_in_game, async function(req, res) {
 //     "location": [lat, long],
 //     "answer": "answer"
 // }
-router.post('/', gameController.is_in_game, function(req, res) {
-    let location = req.body.location;
-    let answer = req.body.answer;
+router.post('/', gameController.is_in_game, async function(req, res) {
+    let resp = {
+        correct: false
+    }
 
+    console.log(req.body);
+    let location = req.body["location[]"];
+    let answer = req.body.answer;
+    console.log("Post Recieved!");
+    console.log(location);
+    console.log(answer);
+    let result = await gameController.verify_answer(location, answer);
+
+    if (result) {
+        console.log("Was Answered Correctly!")
+        req.session.params["points"] += 1;
+        req.session.new_stage = true;
+        resp["correct"] = true;
+        res.json(resp);
+        return;
+    }
+
+    // TODO: Log to database game is over
+    res.json(resp);
 });
 
 module.exports = router;

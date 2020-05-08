@@ -2,188 +2,169 @@
 <html lang="en">
 
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-    <script>
-      var params = {{{params}}};
-      console.log(params);
-    </script>
+  <script>
+    var params = {{{ params }}};
+    console.log(params);
+  </script>
 </head>
 
 <body>
-<<<<<<< HEAD
   <div class="d-flex flex-column align-items-center">
     <div class="d-flex flex-column align-items-center m-5">
       <h5 class="title display-4">World Scope</h5>
       <h5 class="title display-4">{{game_id}}</h5>
-=======
-    <div class="d-flex flex-column align-items-center">
-        <div class="d-flex flex-column align-items-center m-5">
-            <h5 class="title display-4">World Scope</h5>
-        </div>
->>>>>>> e314b0bb2d74a1449b282f9d2624d7adf664c902
     </div>
 
     <style>
-        .title:after {
-            color: rgb(0, 255, 255);
-            mix-blend-mode: difference;
-        }
+      .title:after {
+        color: rgb(0, 255, 255);
+        mix-blend-mode: difference;
+      }
 
-        #pointsContainer {
-            border-radius: 25px;
-            border: 2px solid #000000;
-            position: absolute;
-            padding: 15px;
-            top: 15px;
-            right: 15px;
-            background-color: white;
-        }
+      #pointsContainer {
+        border-radius: 25px;
+        border: 2px solid #000000;
+        position: absolute;
+        padding: 15px;
+        top: 15px;
+        right: 15px;
+        background-color: white;
+        z-index: 2;
+        pointer-events: none;
+      }
 
-        #pointsContainer h5 {
-            margin-bottom: 0px;
-        }
+      #pointsContainer h5 {
+        margin-bottom: 0px;
+      }
     </style>
     <div id="pointsContainer">
-        <h5>Points Total: <span id="points-val" class="badge badge-secondary">placeholder</span></h5>
+      <h5>Points Total: <span id="points-val" class="badge badge-secondary">placeholder</span></h5>
     </div>
     <style>
-        .title:after {
-            color: rgb(0, 255, 255);
-            mix-blend-mode: difference;
-        }
 
-        #timeContainer {
-            border-radius: 25px;
-            border: 2px solid #000000;
-            position: absolute;
-            padding: 15px;
-            top: 15px;
-            left: 15px;
-            background-color: white;
-        }
+      #timeContainer {
+        border-radius: 25px;
+        border: 2px solid #000000;
+        position: absolute;
+        padding: 15px;
+        top: 15px;
+        left: 15px;
+        background-color: white;
+        z-index: 2;
+        pointer-events: none;
+      }
 
-        #timeContainer h5 {
-            margin-bottom: 0px;
-        }
+      #timeContainer h5 {
+        margin-bottom: 0px;
+      }
     </style>
     <div id="timeContainer">
-        <h5>Time Remaining: <span id="time-val" class="badge badge-secondary">placeholder</span></h5>
+      <h5>Time Remaining: <span id="time-val" class="badge badge-secondary">placeholder</span></h5>
     </div>
     <style>
-        #questionsContainer {
-            border-radius: 25px;
-            border: 2px solid #000000;
-            height: 340px;
-            width: 340px;
-            position: absolute;
-            bottom: 15px;
-            right: 15px;
-            overflow: scroll;
-            background-color: white;
-        }
-
-<<<<<<< HEAD
-  <style>
-    #street {
-      position: absolute;
-      height: 100%;
-      width: 100%;
-      top: 0;
-      z-index: -1;
-    }
-  </style>
-  <div id="street"></div>
-  <script>
-    var panorama;
-    function initialize() {
-      var location = { lat: params["stage"]["location"][0], lng: params["stage"]["location"][1] };
-      var panorama = new google.maps.StreetViewPanorama(
-        document.getElementById('street'), {
-        position: location,
-        pov: {
-          heading: 34,
-          pitch: 10
-        },
-        disableDefaultUI: true
-      });
-    }
-  </script>
-=======
-        .jumbotron {
-            margin-bottom: 0 !important;
-        }
->>>>>>> e314b0bb2d74a1449b282f9d2624d7adf664c902
-
-        .btn {
-            margin-top: 0 !important;
-            margin-bottom: 0 !important;
-        }
+      #questionsContainer {
+        border-radius: 25px;
+        border: 2px solid #000000;
+        height: 340px;
+        width: 340px;
+        position: absolute;
+        bottom: 15px;
+        right: 15px;
+        overflow: scroll;
+        background-color: white;
+        z-index: 2;
+      }
     </style>
+
+    <div id="street"></div>
+    <script>
+      var panorama;
+      function initialize() {
+        var location = { lat: params["stage"]["location"][0], lng: params["stage"]["location"][1] };
+        var panorama = new google.maps.StreetViewPanorama(
+          document.getElementById('street'), {
+          position: location,
+          pov: {
+            heading: 34,
+            pitch: 10
+          },
+          disableDefaultUI: true
+        });
+      }
+    </script>
 
     <style>
-        #street {
-            position: absolute;
-            height: 100%;
-            width: 100%;
-            top: 0;
-            z-index: -1;
-        }
+      #street {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+      }
+
+      .jumbotron {
+        margin-bottom: 0 !important;
+      }
+
+      .btn {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+      }
     </style>
-    <div id="street"></div>
 
     <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNNU8VSvmDDODu94R-LSBbXTLODWzpXN8&callback=initialize">
-        </script>
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNNU8VSvmDDODu94R-LSBbXTLODWzpXN8&callback=initialize">
+      </script>
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalLabel">Hint</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div id="modalBody" class="modal-body">Placeholder Text</div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalLabel">Hint</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div id="modalBody" class="modal-body">Placeholder Text</div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
         </div>
+      </div>
     </div>
     <div id="questionsContainer">
-        <div class="jumbotron">
-            <div class="container">
-                <h1 class="display-4">Question:</h1>
-                <p class="lead">What text should a placeholder place if a placeholder could hold place?</p>
-            </div>
+      <div class="jumbotron">
+        <div class="container">
+          <h1 class="display-4">Question:</h1>
+          <p class="lead">What text should a placeholder place if a placeholder could hold place?</p>
         </div>
-        <div>
-            <button type="button" class="ans-btn btn btn-outline-secondary btn-lg btn-block">Option1</button>
-            <button type="button" class="ans-btn btn btn-outline-secondary btn-lg btn-block">Option2</button>
-            <button type="button" class="ans-btn btn btn-outline-secondary btn-lg btn-block">Option3</button>
-            <button type="button" class="ans-btn btn btn-outline-secondary btn-lg btn-block">Option4</button>
-            <button id="hint" type="button" class="btn btn-outline-secondary btn-lg btn-block" data-toggle="modal"
-                data-target="#exampleModal">Hint</button>
-        </div>
+      </div>
+      <div>
+        <button type="button" class="ans-btn btn btn-outline-secondary btn-lg btn-block">Option1</button>
+        <button type="button" class="ans-btn btn btn-outline-secondary btn-lg btn-block">Option2</button>
+        <button type="button" class="ans-btn btn btn-outline-secondary btn-lg btn-block">Option3</button>
+        <button type="button" class="ans-btn btn btn-outline-secondary btn-lg btn-block">Option4</button>
+        <button id="hint" type="button" class="btn btn-outline-secondary btn-lg btn-block" data-toggle="modal"
+          data-target="#exampleModal">Hint</button>
+      </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"
-        integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
+      integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"></script>
     <script src="javascript/game.js"></script>
 </body>
 

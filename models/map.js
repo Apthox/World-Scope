@@ -6,9 +6,13 @@ var dbconnection = require('./dbconnection');
 module.exports.get_maps_by_coordinates = async(latitude, longitude) => {
     return new Promise(async(resolve, reject) => {
         var db = await dbconnection.get_dbo_instance();
-        db.collection('map').find({ latitude: latitude, longitude: longitude }).then(data => {
-            resolve(data);
-        });
+        let map = db.collection('map');
+        map.findOne({ "latitude": latitude, "longitude": longitude }, function(err, result) {
+            if (err) {
+                throw err;
+            }
+            resolve(result);
+        })
     });
 }
 

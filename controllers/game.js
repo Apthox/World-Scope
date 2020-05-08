@@ -25,6 +25,12 @@ module.exports.get_random_stage = async function() {
 }
 
 module.exports.verify_answer = async function(location, answer) {
-    let map = await mapModel.get_maps_by_coordinates(location[0], location[1]);
+    let map = await mapModel.get_maps_by_coordinates(parseFloat(location[0]), parseFloat(location[1]));
+
     console.log(map);
+
+    if (map["title"] == answer) {
+        return true;
+    }
+    return false;
 }
