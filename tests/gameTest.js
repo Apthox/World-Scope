@@ -1,17 +1,17 @@
 var db = require('../models/dbconnection');
-var User = require('../models/game');
+var Game = require('../models/game');
 var assert = require('assert');
 
 
-describe('create Game', async function() {
-    describe('database', async function() {
-      it('Should return false because user exists', async function() {
-        var dbo = await db.get_dbo_instance(); 
-        var newUser = User.createUser('','');
-        if(newUser) {
-            User.remove_user('UserTest1')
-            return true
-        } 
-      });
-    });
-  });
+// describe('create Game', async function() {
+//     describe('database', async function() {
+//       it('Should return false because user exists', async function() {
+//         var dbo = await db.get_dbo_instance(); 
+//         var newGame = Game.create_game('5eadd3f70ba602bae9f182e0','');
+//         if(newUser) {
+//             User.remove_user('UserTest1')
+//             return true
+//         } 
+//       });
+//     });
+//   });
