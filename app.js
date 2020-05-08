@@ -8,8 +8,7 @@ var bodyParser = require('body-parser');
 var localStrategy = require('passport-local');
 const mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
-
-
+var session = require('express-session');
 
 var indexRouter = require('./routes/index');
 var userRouter = require('./routes/user');
@@ -22,6 +21,8 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+
+app.use(session({ secret: 'SecretHash', cookie: { maxAge: (60 * 60 * 1000) } }))
 
 app.use(logger('dev'));
 app.use(express.json());

@@ -6,12 +6,10 @@ var dbconnection = require('./dbconnection');
 module.exports.get_maps_by_coordinates = async(latitude, longitude) => {
     return new Promise(async(resolve, reject) => {
         var db = await dbconnection.get_dbo_instance();
-        db.collection('map').find({ latitude, longitude }).then(data => {
+        db.collection('map').find({ latitude: latitude, longitude: longitude }).then(data => {
             resolve(data);
         });
-    })
-
-
+    });
 }
 
 module.exports.get_random_maps = () => {
@@ -22,7 +20,7 @@ module.exports.get_random_maps = () => {
 
         map.aggregate([{ $sample: { size: 4 } }]).toArray(function(err, results) {
             console.log(results);
-            //res.json(results);
+            resolve(results);
         });
     });
 }

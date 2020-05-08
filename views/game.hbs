@@ -10,10 +10,17 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
+    <script>
+      var params = {{{params}}};
+      console.log(params);
+    </script>
+</head>
+
 <body>
   <div class="d-flex flex-column align-items-center">
     <div class="d-flex flex-column align-items-center m-5">
       <h5 class="title display-4">World Scope</h5>
+      <h5 class="title display-4">{{game_id}}</h5>
     </div>
   </div>
 
@@ -76,17 +83,16 @@
   <script>
     var panorama;
     function initialize() {
-      var fenway = { lat: 42.345573, lng: -71.098326 };
+      var location = { lat: params["stage"]["location"][0], lng: params["stage"]["location"][1] };
       var panorama = new google.maps.StreetViewPanorama(
         document.getElementById('street'), {
-        position: fenway,
+        position: location,
         pov: {
           heading: 34,
           pitch: 10
         },
         disableDefaultUI: true
       });
-      map.setStreetView(panorama);
     }
   </script>
 
