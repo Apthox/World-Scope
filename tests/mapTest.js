@@ -7,7 +7,7 @@ describe('create Map', async function() {
       it('Should return True because map record Already Exists', async function() {
         var dbo = await db.get_dbo_instance(); 
         var newMap = Map.create_map('Oda, Japan','Mining for other minerals, such as copper, then replaced silver as the..',35.1051464, 132.4365703);
-        if(newUser) {
+        if(newMap) {
             console.log("Date Exists")
             return true
         } 

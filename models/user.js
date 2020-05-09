@@ -73,4 +73,7 @@ module.exports.get_users = async function() {
 }
 
 
-
+module.exports.remove_user = async function(username) {
+    let dbo = await dbconnection.get_dbo_instance();
+    dbo.collection('users').removeOne(username);
+}
