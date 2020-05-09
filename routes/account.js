@@ -16,6 +16,8 @@ router.post('/login', async function(req, res, next) {
     var data = await User.authenticate_user(req.body.username, req.body.password);
     console.log(data);
     if (data["success"]) {
+        req.session.user = data["user"];
+        req.session.authed = true;
         console.log("Was authenticated!");
         res.redirect('/');
     } else {
@@ -25,8 +27,9 @@ router.post('/login', async function(req, res, next) {
 });
 
 
-router.get('/logout', function(req, res, next) {
-    res.render('logout', { title: 'Express' });
+router.get('/logout', function(req, res) {
+    req.session.destroy();
+    res.redirect('/');
 });
 
 router.post('/signup', function(req, res, next) {

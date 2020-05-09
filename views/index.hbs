@@ -9,16 +9,195 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"
+    integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
+</head>
 
 <body>
-  <div class="d-flex flex-column align-items-center">
-    <div class="d-flex flex-column align-items-center m-5">
-      <h1 class="display-4">World Scope Home</h1>
-      <p></p>
-      <button type="button" class="btn btn-primary btn-lg btn-block">Login</button>
-      <button type="button" class="btn btn-secondary btn-lg btn-block">Guest</button>
+  <div class="loading" hidden>
+    <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
     </div>
   </div>
+  <div id="front">
+    <div class="title-box">
+      <h1>World Scope</h1>
+      {{#if authed}}
+        <h3 class="user-title">Logged in as <span class="username">{{user.username}}</span></h3>
+      {{/if}}
+    </div>
+    <div class="content-box">
+      <div class="button-box">
+        {{#if authed}}
+          <button type="button" class="btn btn-outline-danger" onclick="window.location='/account/logout';">Logout</button>
+          <button type="button" class="btn btn-outline-success" onclick="window.location='/game/start';">Play</button>
+        {{else}}
+          <button type="button" class="btn btn-outline-success" onclick="window.location='/account/login';">Login</button>
+          <button type="button" class="btn btn-outline-light">Play as guest</button>
+        {{/if}}
+        <button type="button" class="btn btn-outline-info">Leaderboard</button>
+      </div>
+    </div>
+  </div>
+  <style>
+    .user-title {
+      font-size: 30px;
+      color: snow;
+      font-family: 'Pacifico', cursive;
+    }
+
+    .username {
+      font-family: sans-serif;
+      color: limegreen;
+    }
+
+    #street {
+      background-color: black;
+    }
+
+    .loading {
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      background-color: #e0e0e0;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .spinner-border {
+      height: 100px;
+      width: 100px;
+    }
+
+    #street {
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    #back {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      backdrop-filter: blur(10px) saturate(2);
+    }
+
+    #front {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+    }
+
+    body {
+      padding: 0;
+      background-color: #000000;
+      background-image: linear-gradient(147deg, #000000 0%, #2c3e50 74%);
+    }
+
+    .title-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex: 1;
+      flex-direction: column;
+    }
+
+    .title-box>h1 {
+      font-size: 100px;
+      color: #eee;
+      font-family: 'Pacifico', cursive;
+      padding: 30px;
+    }
+
+    .content-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex: 4;
+    }
+
+    .button-box {
+      width: 30%;
+      display: flex;
+      flex-direction: column;
+      transform: translateY(-90px);
+    }
+
+    .btn {
+      margin-bottom: 20px;
+      font-size: x-large;
+    }
+
+    .btn-outline-success {
+      color: #8BC34A;
+      border: 1px solid #8BC34A;
+    }
+
+    .btn-outline-success:hover {
+      color: black;
+      background-color: #8BC34A;
+    }
+
+    .btn-outline-info {
+      color: #00BCD4;
+      border: 1px solid #00BCD4;
+    }
+
+    .btn-outline-info:hover {
+      color: black;
+      background-color: #00BCD4;
+    }
+  </style>
+  <div id="back"></div>
+  <div id="street"></div>
+  <script>
+    var panorama;
+    function initialize() {
+      var location = { lat: 35.658045, lng: 139.7486614 };
+      var panorama = new google.maps.StreetViewPanorama(
+        document.getElementById('street'), {
+        position: location,
+        pov: {
+          heading: 0,
+          pitch: 0,
+          zoom: 1
+        },
+        disableDefaultUI: true
+      });
+
+      setTimeout(function() {
+        $(".loading").hide();
+      }, 3000);
+
+      let rotation = .05,   // In degrees
+        interval = 50; // In milliseconds
+
+      const rotateId = setInterval(() => {
+        const oldPov = panorama.getPov();
+        panorama.setPov({
+          heading: oldPov.heading + rotation,
+          pitch: oldPov.pitch,
+          zoom: oldPov.zoom
+        });
+      }, interval);
+    }
+  </script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNNU8VSvmDDODu94R-LSBbXTLODWzpXN8&callback=initialize">
+    </script>
 </body>
 
 </html>

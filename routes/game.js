@@ -6,7 +6,12 @@ var gameModel = require('./../models/game');
 
 router.get('/start', async function(req, res) {
     try {
-        let id = await gameModel.create_game("Anonymous", "Anonymous");
+        let id;
+        if (req.session.user) {
+            id = await gameModel.create_game(req.session.user["_id"], req.session.user["username"]);
+        } else {
+            id = await gameModel.create_game("Anonymous", "Anonymous");
+        }
         console.log(id);
         console.log(id.toHexString());
 
@@ -46,7 +51,8 @@ router.get('/', gameController.is_in_game, async function(req, res) {
         title: 'Express',
         layout: "",
         game_id: req.session.game,
-        params: JSON.stringify(req.session.params)
+        params: JSON.stringify(req.session.params),
+        user: req.session.user
     });
 });
 
