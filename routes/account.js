@@ -12,14 +12,15 @@ router.get('/login', function(req, res, next) {
 });
 
 router.post('/login', async function(req, res, next) {
+    console.log(req.body);
     var data = await User.authenticate_user(req.body.username, req.body.password);
     console.log(data);
     if (data["success"]) {
         console.log("Was authenticated!");
-        res.redirect('/')
+        res.redirect('/');
     } else {
         console.log("Was not authenticated!");
-        res.render('/login', { message: "error logging in" });
+        res.render('login', { message: "error logging in" });
     }
 });
 
