@@ -1,4 +1,5 @@
 var mapModel = require("./../models/map");
+var shuffle = require('shuffle-array');
 
 module.exports.is_in_game = function(req, res, next) {
     if (req.session.game) {
@@ -20,7 +21,7 @@ module.exports.get_random_stage = async function() {
     return {
         "location": location,
         "hint": hint,
-        "answers": answers
+        "answers": shuffle(answers)
     }
 }
 

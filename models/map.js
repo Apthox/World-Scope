@@ -38,7 +38,7 @@ module.exports.create_map = async(map) => {
 
 module.exports.update_map_hint = async(hint) => {
     var user_id = mongo.ObjectID(user_id);
-
+    
     var db = await dbconnection.get_dbo_instance();
 
     var mapupdate = { $set: { hint: hint } };
