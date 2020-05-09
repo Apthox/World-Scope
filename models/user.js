@@ -68,6 +68,24 @@ module.exports.createUser = async function(username, password, salt) {
 }
 
 module.exports.get_users = async function() {
+<<<<<<< HEAD
+    let dbo = await dbconnection.get_dbo_instance();
+    dbo.collection('users').find();
+}
+
+module.exports.find_user_by_username = async function(username) {
+    let dbo = await dbconnection.get_dbo_instance();
+    dbo.collection('users').find({"username": username});
+}
+
+
+module.exports.remove_user = async function(username) {
+    let dbo = await dbconnection.get_dbo_instance();
+    dbo.collection('users').removeOne({
+        "username": username
+    });
+}
+=======
         let dbo = await dbconnection.get_dbo_instance();
         dbo.collection('users').find();
     }
@@ -87,3 +105,4 @@ module.exports.get_users = async function() {
 
 
     */
+>>>>>>> ccddbe823b6d2c161c1a605d602142b40c7c6caa

@@ -32,6 +32,10 @@ router.get('/logout', function(req, res) {
     res.redirect('/');
 });
 
+router.get('/signup', function(req, res, next) {
+    res.render('signup');
+})
+
 router.post('/signup', function(req, res, next) {
     console.log(User.prototype);
     console.log("Username > " + req.body.username);
