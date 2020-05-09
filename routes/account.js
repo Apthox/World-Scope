@@ -14,6 +14,7 @@ router.get('/login', function(req, res, next) {
 router.post('/login',function(req,res,next) {
     var userdata = User.authenticate_user(req.body.username,req.body.password);
     if(userdata) {
+        console.log("logged in");
         res.redirect('/')
     }
     else {
@@ -25,6 +26,10 @@ router.post('/login',function(req,res,next) {
 router.get('/logout', function(req, res, next) {
     res.render('logout', { title: 'Express' });
 });
+
+router.get('/signup',function(req,res,next) {
+    res.render('signup');
+})
 
 router.post('/signup',function(req, res, next) {
     console.log(User.prototype);
