@@ -18,15 +18,20 @@ router.post('/login',function(req,res,next) {
         console.log("logged in");
 =======
 router.post('/login', async function(req, res, next) {
+    console.log(req.body);
     var data = await User.authenticate_user(req.body.username, req.body.password);
     console.log(data);
     if (data["success"]) {
         console.log("Was authenticated!");
+<<<<<<< HEAD
 >>>>>>> ccddbe823b6d2c161c1a605d602142b40c7c6caa
         res.redirect('/')
+=======
+        res.redirect('/');
+>>>>>>> c82b2e6fe084f188c6043bf973963e495363bdb9
     } else {
         console.log("Was not authenticated!");
-        res.render('/login', { message: "error logging in" });
+        res.render('login', { message: "error logging in" });
     }
 });
 

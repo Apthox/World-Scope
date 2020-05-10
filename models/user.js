@@ -3,11 +3,9 @@ var bcrypt = require('bcrypt');
 
 // return object with user id
 module.exports.authenticate_user = async function(username, password) {
-
     let resp = {
         "success": true,
         "msg": "",
-        "UUID": ""
     }
 
     // check database if someone with username exists
@@ -39,7 +37,7 @@ module.exports.authenticate_user = async function(username, password) {
     // return true if matches
     resp["success"] = success;
     resp["user"] = users[0];
-    return success;
+    return resp;
 };
 
 module.exports.createUser = async function(username, password, salt) {
