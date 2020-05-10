@@ -21,6 +21,9 @@
     <div class="d-flex flex-column align-items-center m-5">
       <h5 class="title display-4">World Scope</h5>
       <h5 class="title display-4">{{game_id}}</h5>
+      {{#if user}}
+        <h5 class="title display-4">{{user.username}}</h5>
+      {{/if}}
     </div>
 
     <style>

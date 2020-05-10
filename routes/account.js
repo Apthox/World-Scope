@@ -11,24 +11,17 @@ router.get('/login', function(req, res, next) {
     res.render('login', { title: 'Log in Page' });
 });
 
-<<<<<<< HEAD
-router.post('/login',function(req,res,next) {
-    var userdata = User.authenticate_user(req.body.username,req.body.password);
-    if(userdata) {
-        console.log("logged in");
-=======
 router.post('/login', async function(req, res, next) {
     console.log(req.body);
     var data = await User.authenticate_user(req.body.username, req.body.password);
     console.log(data);
     if (data["success"]) {
+        req.session.user = data["user"];
+        req.session.authed = true;
         console.log("Was authenticated!");
-<<<<<<< HEAD
->>>>>>> ccddbe823b6d2c161c1a605d602142b40c7c6caa
+
         res.redirect('/')
-=======
-        res.redirect('/');
->>>>>>> c82b2e6fe084f188c6043bf973963e495363bdb9
+
     } else {
         console.log("Was not authenticated!");
         res.render('login', { message: "error logging in" });
@@ -36,19 +29,16 @@ router.post('/login', async function(req, res, next) {
 });
 
 
-router.get('/logout', function(req, res, next) {
-    res.render('logout', { title: 'Express' });
+router.get('/logout', function(req, res) {
+    req.session.destroy();
+    res.redirect('/');
 });
 
-<<<<<<< HEAD
-router.get('/signup',function(req,res,next) {
+router.get('/signup', function(req, res, next) {
     res.render('signup');
 })
 
-router.post('/signup',function(req, res, next) {
-=======
 router.post('/signup', function(req, res, next) {
->>>>>>> ccddbe823b6d2c161c1a605d602142b40c7c6caa
     console.log(User.prototype);
     console.log("Username > " + req.body.username);
     console.log("Password > " + req.body.password);
