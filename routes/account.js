@@ -11,33 +11,42 @@ router.get('/login', function(req, res, next) {
     res.render('login', { title: 'Log in Page' });
 });
 
-router.post('/login',function(req,res,next) {
-    var userdata = User.authenticate_user(req.body.username,req.body.password);
-    if(userdata) {
-        res.redirect('/')
-    }
-    else {
-        res.redirect('/login',{message: "error logging in"});
+router.post('/login', async function(req, res, next) {
+    console.log(req.body);
+    var data = await User.authenticate_user(req.body.username, req.body.password);
+    console.log(data);
+    if (data["success"]) {
+        req.session.user = data["user"];
+        req.session.authed = true;
+        console.log("Was authenticated!");
+        res.redirect('/');
+    } else {
+        console.log("Was not authenticated!");
+        res.render('login', { message: "error logging in" });
     }
 });
 
 
-router.get('/logout', function(req, res, next) {
-    res.render('logout', { title: 'Express' });
+router.get('/logout', function(req, res) {
+    req.session.destroy();
+    res.redirect('/');
 });
 
-router.post('/signup',function(req, res, next) {
+router.get('/signup', function(req, res, next) {
+    res.render('signup');
+})
+
+router.post('/signup', function(req, res, next) {
     console.log(User.prototype);
     console.log("Username > " + req.body.username);
     console.log("Password > " + req.body.password);
     var user = User.createUser(req.body.username, req.body.password);
     console.log(user.prototype);
-    if(user) {
+    if (user) {
         console.log(user);
         res.redirect('/');
-    }
-    else {
-        res.redirect('/signup',{message: "error creating user: User Already Exists"});
+    } else {
+        res.redirect('/signup', { message: "error creating user: User Already Exists" });
     }
 })
 

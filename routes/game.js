@@ -6,7 +6,12 @@ var gameModel = require('./../models/game');
 
 router.get('/start', async function(req, res) {
     try {
-        let id = await gameModel.create_game("Anonymous");
+        let id;
+        if (req.session.user) {
+            id = await gameModel.create_game(req.session.user["_id"], req.session.user["username"]);
+        } else {
+            id = await gameModel.create_game("Anonymous", "Anonymous");
+        }
         console.log(id);
         console.log(id.toHexString());
 
@@ -40,13 +45,14 @@ router.get('/', gameController.is_in_game, async function(req, res) {
         req.session.new_stage = false;
     }
 
-    req.session.params["stage"]["location"] = [-33.8605405, 151.2095494];
+    //-33.8605405, 151.2095494];
 
     res.render('game', {
         title: 'Express',
         layout: "",
         game_id: req.session.game,
-        params: JSON.stringify(req.session.params)
+        params: JSON.stringify(req.session.params),
+        user: req.session.user
     });
 });
 
@@ -77,7 +83,17 @@ router.post('/', gameController.is_in_game, async function(req, res) {
         return;
     }
 
+    console.log("was Answered Incorrectly!");
+
     // TODO: Log to database game is over
+    gameModel.update_game(req.session.game, {
+        "end": Math.round(new Date().getTime() / 1000),
+        "points": req.session.params["points"]
+    });
+
+    req.session.params = undefined;
+    req.session.game = undefined;
+    req.session.new_stage = undefined;
     res.json(resp);
 });
 

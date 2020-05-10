@@ -1,4 +1,4 @@
-const mapFolder = './maps/';
+const mapFolder = './maps/locations/';
 const fs = require('fs');
 const mapModel = require('./../models/map');
 
@@ -6,7 +6,7 @@ function writeMapToDatabase(file) {
 
     let rawdata = fs.readFileSync(mapFolder + file);
     let map = JSON.parse(rawdata);
-    
+
     console.log(map);
     mapModel.create_map(map);
 }
@@ -24,7 +24,7 @@ fs.readdir(mapFolder, (err, files) => {
         } else {
             console.log("Can't write this file to database");
         }
-        
+
     });
 
     return;

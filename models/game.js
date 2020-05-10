@@ -20,12 +20,13 @@ module.exports.get_games = async function() {
     })
 }
 
-module.exports.create_game = (user_id) => {
+module.exports.create_game = (user_id, username) => {
     return new Promise(async(resolve, reject) => {
         let db = await dbconnection.get_dbo_instance();
 
         db.collection('game').insertOne({
             user_id: user_id,
+            username: username,
             points: 0,
             start: Math.round(new Date().getTime() / 1000),
             end: -1
@@ -55,4 +56,32 @@ module.exports.update_game_score = async(points) => {
 
     var points_update = { $set: { points: points } };
     db.collection('game').updateOne({ _id: game_id }, points_update)
+}
+
+module.exports.update_game = async(id, updates) => {
+    var db = await dbconnection.get_dbo_instance();
+
+    db.collection('game').updateOne({
+        "_id": mongo.ObjectID(id)
+    }, {
+        "$set": updates
+    });
+};
+
+module.exports.get_leaderboard = async(limit) => {
+    return new Promise(async(resolve, reject) => {
+        var db = await dbconnection.get_dbo_instance();
+
+        db.collection('game').find({
+            "end": {
+                "$not": {
+                    "$lt": 0
+                }
+            }
+        }).sort({
+            "points": -1
+        }).limit(limit).toArray((err, docs) => {
+            resolve(docs);
+        });
+    });
 }
