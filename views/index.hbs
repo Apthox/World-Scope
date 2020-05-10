@@ -34,9 +34,9 @@
           <button type="button" class="btn btn-outline-success" onclick="window.location='/game/start';">Play</button>
         {{else}}
           <button type="button" class="btn btn-outline-success" onclick="window.location='/account/login';">Login</button>
-          <button type="button" class="btn btn-outline-light">Play as guest</button>
+          <button type="button" class="btn btn-outline-light" onclick="window.location='/game/start';">Play as guest</button>
         {{/if}}
-        <button type="button" class="btn btn-outline-info">Leaderboard</button>
+        <button type="button" class="btn btn-outline-info" onclick="window.location='/leaderboard';">Leaderboard</button>
       </div>
     </div>
   </div>
@@ -182,7 +182,7 @@
         $(".loading").hide();
       }, 3000);
 
-      let rotation = .05,   // In degrees
+      let rotation = .1,   // In degrees
         interval = 50; // In milliseconds
 
       const rotateId = setInterval(() => {

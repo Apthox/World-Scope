@@ -12,14 +12,14 @@
 
   <script>
     var params = {{{ params }}};
+    var user_username = '{{user.username}}'
     console.log(params);
   </script>
 </head>
 
 <body>
   <div class="d-flex flex-column align-items-center">
-    <div class="d-flex flex-column align-items-center m-5">
-      <h5 class="title display-4">World Scope</h5>
+    <div class="title-container d-flex flex-column align-items-center m-5">
       <h5 class="title display-4">{{game_id}}</h5>
       {{#if user}}
         <h5 class="title display-4">{{user.username}}</h5>
@@ -27,14 +27,17 @@
     </div>
 
     <style>
+      .title-container {
+        z-index: 3;
+      }
+
       .title:after {
         color: rgb(0, 255, 255);
         mix-blend-mode: difference;
       }
 
       #pointsContainer {
-        border-radius: 25px;
-        border: 2px solid #000000;
+        border-radius: 10px;
         position: absolute;
         padding: 15px;
         top: 15px;
@@ -42,6 +45,7 @@
         background-color: white;
         z-index: 2;
         pointer-events: none;
+        box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
       }
 
       #pointsContainer h5 {
@@ -54,8 +58,7 @@
     <style>
 
       #timeContainer {
-        border-radius: 25px;
-        border: 2px solid #000000;
+        border-radius: 10px;
         position: absolute;
         padding: 15px;
         top: 15px;
@@ -63,6 +66,7 @@
         background-color: white;
         z-index: 2;
         pointer-events: none;
+        box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
       }
 
       #timeContainer h5 {
@@ -74,8 +78,7 @@
     </div>
     <style>
       #questionsContainer {
-        border-radius: 25px;
-        border: 2px solid #000000;
+        border-radius: 10px;
         height: 340px;
         width: 340px;
         position: absolute;
@@ -84,6 +87,7 @@
         overflow: scroll;
         background-color: white;
         z-index: 2;
+        box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
       }
     </style>
 
@@ -114,11 +118,15 @@
 
       .jumbotron {
         margin-bottom: 0 !important;
+        height: 100%;
       }
 
       .btn {
         margin-top: 0 !important;
         margin-bottom: 0 !important;
+        border: 0;
+        border-bottom: 1px solid darkgray;
+        border-radius: 0;
       }
     </style>
 
@@ -148,7 +156,9 @@
       <div class="jumbotron">
         <div class="container">
           <h1 class="display-4">Question:</h1>
-          <p class="lead">What text should a placeholder place if a placeholder could hold place?</p>
+          <p class="lead">Where are you?</p>
+          <br>
+          <p class="lead">Scroll down to reveal locations and hint!</p>
         </div>
       </div>
       <div>
