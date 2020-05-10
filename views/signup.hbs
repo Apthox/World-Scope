@@ -143,7 +143,7 @@
 </head>
 
 <body>
-    <form action="/account/signup" method="POST">
+    <form id="create-form" action="/account/signup" method="POST">
         <div class="container">
             <div class="row">
                 <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
@@ -152,22 +152,32 @@
                             <h5 class="card-title text-center">Sign Up/Create Account</h5>
                             <form class="form-signin">
                                 <div class="form-label-group">
-                                    <input type="username" id="inputUsername" class="form-control" placeholder="Username"
+                                    <input name="username" type="username" id="inputUsername" class="form-control" placeholder="Username"
                                         required>
                                     <label for="inputUsername">Username</label>
                                 </div>
 
                                 <div class="form-label-group">
-                                    <input type="password" id="inputPassword" class="form-control"
+                                    <input name="password" type="password" id="inputPassword" class="form-control"
                                         placeholder="Password" required>
                                     <label for="inputPassword">Password</label>
                                 </div>
 
-                                <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign
-                                    in</button>
+                                <div class="form-label-group">
+                                    <input type="password" id="ConfirmInputPassword" class="form-control"
+                                        placeholder="Confirm Password" required>
+                                    <label for="ConfirmInputPassword">Confirm Password</label>
+                                </div>
+
+                                <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign Up</button>
                                 <hr class="my-4">
-                                <div class="alert alert-dark" role="alert">
-                                    {{message}}
+                                <button class="btn btn-lg btn-danger btn-block text-uppercase" onclick="window.location='/account/login';">Back</button>
+                                <div id="message-box">
+                                    {{#if message}}
+                                        <div style="margin-top: 20px;" class="alert alert-danger" role="alert">
+                                            {{message}}
+                                        </div>
+                                    {{/if}}
                                 </div>
                             </form>
                         </div>
@@ -176,16 +186,24 @@
             </div>
         </div>
     </form>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"
+      integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function(){
+            $("#create-form").on('submit', function(e) {
+                let password = $("#inputPassword").val();
+                let confirmPassword = $("#ConfirmInputPassword").val();
+                console.log(password + " - " + confirmPassword);
+                if (password != confirmPassword) {
+                    e.preventDefault();
+                    $("#message-box").append(
+                        "<div class='alert alert-warning'> Passwords do not match </div>"
+                    )
+                    return;
+                }
+            });
+        });
+    </script>
+
 </body>
 
-{{!-- <form action='/account/signup' method="POST">
-    <input type="text" name="username" placeholder="enter username">
-    <input type="password" name="password" placeholder="enter password">
-    <input type="text" name="name" placeholder="enter name">
-    <input type="number" name="age" placeholder="enter age">
-
-    <div class="alert alert-dark" role="alert">
-        {{message}}
-    </div>
-    <button>Sign Up</button>
-</form> --}}

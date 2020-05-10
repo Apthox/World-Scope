@@ -1,43 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script>
-      let leaderboard = {{{leaderboard}}};
-      console.log(leaderboard);
-    </script>
-    </head>
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <script>
+    let leaderboard = {{{ leaderboard }}};
+    console.log(leaderboard);
+  </script>
+</head>
+<style>
+  body {
+    background-color: #e0e0e0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .content-box {
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  }
+  h1 {
+    font-family: 'Pacifico', cursive;
+    margin-bottom: 20px;
+  }
+  .list-group-item {
+    border: 0;
+    border-bottom: 1px solid black;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-radius: 0px !important; 
+  }
+  .btn {
+    margin-top: 20px;
+    width: 100%;
+  }
+  hr {
+    margin-top: 20px;
+  }
+</style>
+
 <body>
-    <div class="d-flex flex-column align-items-center">
-        <div class="d-flex flex-column align-items-center m-5">
-            <h1 class="display-4">World Scope Leaderboard</h1>
-				<ul class="list-group list-group-horizontal">
-  				<li class="list-group-item" style="padding: 0;">
-            <ul class="list-group" id="pos-list">
-              <li class="list-group-item">Position:</li>
-            </ul>
-          </li>
-  				<li class="list-group-item" style="padding: 0;">
-            <ul class="list-group" id="name-list">
-              <li class="list-group-item">Username:</li>
-            </ul>
-          </li>
-          <li class="list-group-item" style="padding: 0;">
-            <ul class="list-group" id="score-list">
-              <li class='list-group-item'>Scores:</li>
-            </ul>
-          </li>
-				</ul>
-			</div>
+  <div class="content-box d-flex flex-column align-items-center">
+    <div class="d-flex flex-column align-items-center m-5">
+      <h1 class="display-4">World Scope</h1>
+      <h1>Leaderboard</h1>
+      <ul class="list-group list-group-horizontal">
+        <li class="list-group-item" style="padding: 0;">
+          <ul class="list-group" id="pos-list">
+            <li class="list-group-item">Position</li>
+          </ul>
+        </li>
+        <li class="list-group-item" style="padding: 0;">
+          <ul class="list-group" id="name-list">
+            <li class="list-group-item">Username</li>
+          </ul>
+        </li>
+        <li class="list-group-item" style="padding: 0;">
+          <ul class="list-group" id="score-list">
+            <li class='list-group-item'>Scores</li>
+          </ul>
+        </li>
+      </ul>
+
+      {{#if points}}
+      <h5 style="margin-top: 20px;">Good job {{username}}</h5>
+
+      <h5>You scored {{points}}!</h5>
+
+      <button class="btn btn-success" onclick="window.location='/game/start';">Play Again</button>
+
+      {{/if}}
+
+      <button class="btn btn-primary" onclick="window.location='/';">Main Menu</button>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"
-      integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
-    <script src="javascript/leaderboard.js"></script>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"
+    integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
+  <script src="javascript/leaderboard.js"></script>
 </body>
 
 </html>

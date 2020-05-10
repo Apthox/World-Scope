@@ -36,17 +36,15 @@ router.get('/signup', function(req, res, next) {
     res.render('signup');
 })
 
-router.post('/signup', function(req, res, next) {
-    console.log(User.prototype);
-    console.log("Username > " + req.body.username);
-    console.log("Password > " + req.body.password);
-    var user = User.createUser(req.body.username, req.body.password);
-    console.log(user.prototype);
-    if (user) {
-        console.log(user);
+router.post('/signup', async function(req, res, next) {
+    var resp = await User.createUser(req.body.username, req.body.password);
+    console.log(resp);
+    if (resp["success"]) {
+        req.session.user = resp["user"];
+        req.session.authed = true;
         res.redirect('/');
     } else {
-        res.redirect('/signup', { message: "error creating user: User Already Exists" });
+        res.render('signup', { message: resp["msg"] });
     }
 })
 

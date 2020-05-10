@@ -59,13 +59,17 @@ module.exports.update_game_score = async(points) => {
 }
 
 module.exports.update_game = async(id, updates) => {
-    var db = await dbconnection.get_dbo_instance();
+    return new Promise(async(resolve, reject) => {
+        var db = await dbconnection.get_dbo_instance();
 
-    db.collection('game').updateOne({
-        "_id": mongo.ObjectID(id)
-    }, {
-        "$set": updates
-    });
+        db.collection('game').updateOne({
+            "_id": mongo.ObjectID(id)
+        }, {
+            "$set": updates
+        }).then(() => {
+            resolve();
+        })
+    })
 };
 
 module.exports.get_leaderboard = async(limit) => {

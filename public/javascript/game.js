@@ -53,7 +53,7 @@ $(document).ready(function() {
                 if (data["correct"]) {
                     location.reload();
                 } else {
-                    window.location.replace("./leaderboard");
+                    window.location.replace(`./leaderboard?points=${params["points"]}&username=${user_username}`);
                 }
             }
         });

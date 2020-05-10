@@ -10,7 +10,7 @@ router.get('/start', async function(req, res) {
         if (req.session.user) {
             id = await gameModel.create_game(req.session.user["_id"], req.session.user["username"]);
         } else {
-            id = await gameModel.create_game("Anonymous", "Anonymous");
+            id = await gameModel.create_game("Guest", "Guest");
         }
         console.log(id);
         console.log(id.toHexString());
@@ -86,7 +86,7 @@ router.post('/', gameController.is_in_game, async function(req, res) {
     console.log("was Answered Incorrectly!");
 
     // TODO: Log to database game is over
-    gameModel.update_game(req.session.game, {
+    await gameModel.update_game(req.session.game, {
         "end": Math.round(new Date().getTime() / 1000),
         "points": req.session.params["points"]
     });
